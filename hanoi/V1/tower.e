@@ -20,7 +20,16 @@ feature {}
 		local
 			i: INTEGER
 		do
-
+			create t.make(1,n)
+				from
+					i := 0
+				until
+					i >= n
+				loop
+					t.put(i + 1, n - i)
+					i := i + 1
+				end
+				top := n
 			-- A Remplir
 
 		end
@@ -29,8 +38,19 @@ feature {}
 			-- Creation d'une tour vide de taille n
 		require
 			n >= 1
+		local
+			i: INTEGER
 		do
-
+			create t.make(1,n)
+			from 
+				i := 1
+			until			
+				i > n
+			loop
+				t.put(0,i)
+				i := i + 1
+			end
+			top := 1
 			-- A Remplir
 		ensure
 			height = n
@@ -92,8 +112,16 @@ feature {HANOI}
 	retirer_disque: INTEGER is
 			-- Retire le dernier disque de la tour courante
 		do
+			if t.item(top) /= 0 and top >= 1 then
 			-- A remplir
-			Result := 0
+				Result := t.item(top)
+				t.remove_last
+				if top > 1 then			
+					top := top - 1
+				end
+			else
+				io.put_string("erreur lors du retrait")
+			end
 		ensure
 			top >= 1
 		end
@@ -102,7 +130,11 @@ feature {HANOI}
 			-- Ajoute un disque de taille d sur la tour.
 			-- Renvoie une erreur (Explicite) si le disque ne peut pas etre ajoute
 		do
-
+ 			if t.item(top) >= d then
+				t.add(d,top)
+			else
+				io.put_string("Erreur lors de l ajout")
+			end
 			-- A Remplir
 			
 		ensure

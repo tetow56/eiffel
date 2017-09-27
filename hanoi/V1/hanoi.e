@@ -38,7 +38,12 @@ feature {ANY}
 		local
 			disque: INTEGER
 		do
-			
+			if  how_many /= 0 then
+				resolve(how_many - 1, source, destination , intermediate)
+				disque := source.retirer_disque
+				destination.ajouter_disque(disque)
+				resolve(how_many - 1, destination, intermediate, source)
+			end 
 			-- A programmer
 			
 		end
